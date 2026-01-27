@@ -1,101 +1,440 @@
-# KormoErp
+# KormoErp Project Structure
 
-<a alt="Nx logo" href="https://nx.dev" target="_blank" rel="noreferrer"><img src="https://raw.githubusercontent.com/nrwl/nx/master/images/nx-logo.png" width="45"></a>
+## Directory Layout
 
-✨ Your new, shiny [Nx workspace](https://nx.dev) is ready ✨.
-
-[Learn more about this workspace setup and its capabilities](https://nx.dev/nx-api/nest?utm_source=nx_project&amp;utm_medium=readme&amp;utm_campaign=nx_projects) or run `npx nx graph` to visually explore what was created. Now, let's get you up to speed!
-
-## Run tasks
-
-To run the dev server for your app, use:
-
-```sh
-npx nx serve kormo-erp
 ```
-
-To create a production bundle:
-
-```sh
-npx nx build kormo-erp
+kormo-erp/
+├── apps/
+│   ├── api-main/                          # SME ERP API (PRIMARY FOCUS)
+│   │   ├── src/
+│   │   │   ├── main.ts
+│   │   │   ├── app.module.ts
+│   │   │   │
+│   │   │   ├── modules/
+│   │   │   │   │
+│   │   │   │   ├── core/                  # Foundation (Non-removable)
+│   │   │   │   │   ├── company/
+│   │   │   │   │   │   ├── entities/
+│   │   │   │   │   │   │   └── company.entity.ts
+│   │   │   │   │   │   ├── dto/
+│   │   │   │   │   │   │   ├── create-company.dto.ts
+│   │   │   │   │   │   │   └── update-company.dto.ts
+│   │   │   │   │   │   ├── company.controller.ts
+│   │   │   │   │   │   ├── company.service.ts
+│   │   │   │   │   │   ├── company.repository.ts
+│   │   │   │   │   │   └── company.module.ts
+│   │   │   │   │   │
+│   │   │   │   │   ├── branch/
+│   │   │   │   │   │   ├── entities/
+│   │   │   │   │   │   │   └── branch.entity.ts
+│   │   │   │   │   │   ├── dto/
+│   │   │   │   │   │   │   ├── create-branch.dto.ts
+│   │   │   │   │   │   │   └── update-branch.dto.ts
+│   │   │   │   │   │   ├── branch.controller.ts
+│   │   │   │   │   │   ├── branch.service.ts
+│   │   │   │   │   │   ├── branch.repository.ts
+│   │   │   │   │   │   └── branch.module.ts
+│   │   │   │   │   │
+│   │   │   │   │   ├── user/
+│   │   │   │   │   │   ├── entities/
+│   │   │   │   │   │   │   ├── user.entity.ts
+│   │   │   │   │   │   │   └── user-branch.entity.ts
+│   │   │   │   │   │   ├── dto/
+│   │   │   │   │   │   │   ├── create-user.dto.ts
+│   │   │   │   │   │   │   ├── update-user.dto.ts
+│   │   │   │   │   │   │   └── assign-branch.dto.ts
+│   │   │   │   │   │   ├── user.controller.ts
+│   │   │   │   │   │   ├── user.service.ts
+│   │   │   │   │   │   ├── user.repository.ts
+│   │   │   │   │   │   └── user.module.ts
+│   │   │   │   │   │
+│   │   │   │   │   ├── auth/
+│   │   │   │   │   │   ├── dto/
+│   │   │   │   │   │   │   ├── login.dto.ts
+│   │   │   │   │   │   │   └── refresh-token.dto.ts
+│   │   │   │   │   │   ├── strategies/
+│   │   │   │   │   │   │   ├── jwt.strategy.ts
+│   │   │   │   │   │   │   └── local.strategy.ts
+│   │   │   │   │   │   ├── auth.controller.ts
+│   │   │   │   │   │   ├── auth.service.ts
+│   │   │   │   │   │   └── auth.module.ts
+│   │   │   │   │   │
+│   │   │   │   │   └── core.module.ts
+│   │   │   │   │
+│   │   │   │   ├── settings/              # System Configuration
+│   │   │   │   │   ├── designation/
+│   │   │   │   │   │   ├── entities/
+│   │   │   │   │   │   │   └── designation.entity.ts
+│   │   │   │   │   │   ├── dto/
+│   │   │   │   │   │   │   ├── create-designation.dto.ts
+│   │   │   │   │   │   │   └── update-designation.dto.ts
+│   │   │   │   │   │   ├── designation.controller.ts
+│   │   │   │   │   │   ├── designation.service.ts
+│   │   │   │   │   │   ├── designation.repository.ts
+│   │   │   │   │   │   └── designation.module.ts
+│   │   │   │   │   │
+│   │   │   │   │   ├── permission/
+│   │   │   │   │   │   ├── entities/
+│   │   │   │   │   │   │   ├── permission.entity.ts
+│   │   │   │   │   │   │   └── designation-permission.entity.ts
+│   │   │   │   │   │   ├── dto/
+│   │   │   │   │   │   │   └── assign-permission.dto.ts
+│   │   │   │   │   │   ├── config/
+│   │   │   │   │   │   │   └── permissions.config.ts    # HARDCODED (temporary)
+│   │   │   │   │   │   ├── permission.controller.ts
+│   │   │   │   │   │   ├── permission.service.ts
+│   │   │   │   │   │   ├── permission.repository.ts
+│   │   │   │   │   │   └── permission.module.ts
+│   │   │   │   │   │
+│   │   │   │   │   ├── form/
+│   │   │   │   │   │   ├── entities/
+│   │   │   │   │   │   │   └── form.entity.ts
+│   │   │   │   │   │   ├── dto/
+│   │   │   │   │   │   │   ├── create-form.dto.ts
+│   │   │   │   │   │   │   └── update-form.dto.ts
+│   │   │   │   │   │   ├── form.controller.ts
+│   │   │   │   │   │   ├── form.service.ts
+│   │   │   │   │   │   ├── form.repository.ts
+│   │   │   │   │   │   └── form.module.ts
+│   │   │   │   │   │
+│   │   │   │   │   ├── approval/
+│   │   │   │   │   │   ├── entities/
+│   │   │   │   │   │   │   ├── approval-rule.entity.ts
+│   │   │   │   │   │   │   └── approval-history.entity.ts
+│   │   │   │   │   │   ├── dto/
+│   │   │   │   │   │   │   ├── create-approval-rule.dto.ts
+│   │   │   │   │   │   │   └── approve.dto.ts
+│   │   │   │   │   │   ├── approval.controller.ts
+│   │   │   │   │   │   ├── approval.service.ts
+│   │   │   │   │   │   ├── approval.repository.ts
+│   │   │   │   │   │   └── approval.module.ts
+│   │   │   │   │   │
+│   │   │   │   │   ├── module-toggle/
+│   │   │   │   │   │   ├── entities/
+│   │   │   │   │   │   │   └── company-module.entity.ts
+│   │   │   │   │   │   ├── dto/
+│   │   │   │   │   │   │   └── toggle-module.dto.ts
+│   │   │   │   │   │   ├── module-toggle.controller.ts
+│   │   │   │   │   │   ├── module-toggle.service.ts
+│   │   │   │   │   │   ├── module-toggle.repository.ts
+│   │   │   │   │   │   └── module-toggle.module.ts
+│   │   │   │   │   │
+│   │   │   │   │   └── settings.module.ts
+│   │   │   │   │
+│   │   │   │   ├── hr/                    # Human Resources (Operations)
+│   │   │   │   │   ├── employee/
+│   │   │   │   │   │   ├── entities/
+│   │   │   │   │   │   │   └── employee.entity.ts
+│   │   │   │   │   │   ├── dto/
+│   │   │   │   │   │   │   ├── sql-state.dto.ts
+│   │   │   │   │   │   │   ├── create-employee.dto.ts
+│   │   │   │   │   │   │   ├── update-employee.dto.ts
+│   │   │   │   │   │   │   └── list-employee.dto.ts
+│   │   │   │   │   │   ├── employee.controller.ts
+│   │   │   │   │   │   ├── employee.service.ts
+│   │   │   │   │   │   ├── employee.repository.ts
+│   │   │   │   │   │   └── employee.module.ts
+│   │   │   │   │   │
+│   │   │   │   │   ├── attendance/
+│   │   │   │   │   │   ├── entities/
+│   │   │   │   │   │   │   └── attendance.entity.ts
+│   │   │   │   │   │   ├── dto/
+│   │   │   │   │   │   ├── attendance.controller.ts
+│   │   │   │   │   │   ├── attendance.service.ts
+│   │   │   │   │   │   └── attendance.module.ts
+│   │   │   │   │   │
+│   │   │   │   │   ├── leave/
+│   │   │   │   │   │   ├── entities/
+│   │   │   │   │   │   │   ├── leave.entity.ts
+│   │   │   │   │   │   │   └── leave-type.entity.ts
+│   │   │   │   │   │   ├── dto/
+│   │   │   │   │   │   ├── leave.controller.ts
+│   │   │   │   │   │   ├── leave.service.ts
+│   │   │   │   │   │   └── leave.module.ts
+│   │   │   │   │   │
+│   │   │   │   │   ├── payroll/              # Future
+│   │   │   │   │   │   └── (structure similar to above)
+│   │   │   │   │   │
+│   │   │   │   │   └── hr.module.ts
+│   │   │   │   │
+│   │   │   │   ├── inventory/             # Inventory Management
+│   │   │   │   │   ├── product/
+│   │   │   │   │   │   ├── entities/
+│   │   │   │   │   │   │   └── product.entity.ts
+│   │   │   │   │   │   ├── dto/
+│   │   │   │   │   │   │   ├── sql-state.dto.ts
+│   │   │   │   │   │   │   ├── create-product.dto.ts
+│   │   │   │   │   │   │   ├── update-product.dto.ts
+│   │   │   │   │   │   │   └── list-product.dto.ts
+│   │   │   │   │   │   ├── product.controller.ts
+│   │   │   │   │   │   ├── product.service.ts
+│   │   │   │   │   │   ├── product.repository.ts
+│   │   │   │   │   │   └── product.module.ts
+│   │   │   │   │   │
+│   │   │   │   │   ├── category/
+│   │   │   │   │   │   ├── entities/
+│   │   │   │   │   │   │   └── category.entity.ts
+│   │   │   │   │   │   ├── dto/
+│   │   │   │   │   │   ├── category.controller.ts
+│   │   │   │   │   │   ├── category.service.ts
+│   │   │   │   │   │   └── category.module.ts
+│   │   │   │   │   │
+│   │   │   │   │   ├── stock/
+│   │   │   │   │   │   ├── entities/
+│   │   │   │   │   │   │   ├── stock.entity.ts
+│   │   │   │   │   │   │   └── stock-log.entity.ts
+│   │   │   │   │   │   ├── dto/
+│   │   │   │   │   │   │   ├── adjust-stock.dto.ts
+│   │   │   │   │   │   │   └── transfer-stock.dto.ts
+│   │   │   │   │   │   ├── stock.controller.ts
+│   │   │   │   │   │   ├── stock.service.ts
+│   │   │   │   │   │   └── stock.module.ts
+│   │   │   │   │   │
+│   │   │   │   │   ├── warehouse/
+│   │   │   │   │   │   ├── entities/
+│   │   │   │   │   │   │   └── warehouse.entity.ts
+│   │   │   │   │   │   ├── dto/
+│   │   │   │   │   │   ├── warehouse.controller.ts
+│   │   │   │   │   │   ├── warehouse.service.ts
+│   │   │   │   │   │   └── warehouse.module.ts
+│   │   │   │   │   │
+│   │   │   │   │   └── inventory.module.ts
+│   │   │   │   │
+│   │   │   │   ├── sales/                 # Sales & POS
+│   │   │   │   │   ├── pos/
+│   │   │   │   │   │   ├── entities/
+│   │   │   │   │   │   │   ├── sale.entity.ts
+│   │   │   │   │   │   │   └── sale-item.entity.ts
+│   │   │   │   │   │   ├── dto/
+│   │   │   │   │   │   │   ├── create-sale.dto.ts
+│   │   │   │   │   │   │   └── sale-item.dto.ts
+│   │   │   │   │   │   ├── pos.controller.ts
+│   │   │   │   │   │   ├── pos.service.ts
+│   │   │   │   │   │   └── pos.module.ts
+│   │   │   │   │   │
+│   │   │   │   │   ├── invoice/
+│   │   │   │   │   │   ├── entities/
+│   │   │   │   │   │   │   └── invoice.entity.ts
+│   │   │   │   │   │   ├── dto/
+│   │   │   │   │   │   ├── invoice.controller.ts
+│   │   │   │   │   │   ├── invoice.service.ts
+│   │   │   │   │   │   └── invoice.module.ts
+│   │   │   │   │   │
+│   │   │   │   │   ├── payment/
+│   │   │   │   │   │   ├── entities/
+│   │   │   │   │   │   │   └── payment.entity.ts
+│   │   │   │   │   │   ├── dto/
+│   │   │   │   │   │   │   └── create-payment.dto.ts
+│   │   │   │   │   │   ├── payment.controller.ts
+│   │   │   │   │   │   ├── payment.service.ts
+│   │   │   │   │   │   └── payment.module.ts
+│   │   │   │   │   │
+│   │   │   │   │   ├── customer/
+│   │   │   │   │   │   ├── entities/
+│   │   │   │   │   │   │   └── customer.entity.ts
+│   │   │   │   │   │   ├── dto/
+│   │   │   │   │   │   ├── customer.controller.ts
+│   │   │   │   │   │   ├── customer.service.ts
+│   │   │   │   │   │   └── customer.module.ts
+│   │   │   │   │   │
+│   │   │   │   │   └── sales.module.ts
+│   │   │   │   │
+│   │   │   │   ├── reports/               # Reporting
+│   │   │   │   │   ├── dto/
+│   │   │   │   │   │   ├── sales-report.dto.ts
+│   │   │   │   │   │   ├── inventory-report.dto.ts
+│   │   │   │   │   │   └── employee-report.dto.ts
+│   │   │   │   │   ├── reports.controller.ts
+│   │   │   │   │   ├── reports.service.ts
+│   │   │   │   │   └── reports.module.ts
+│   │   │   │   │
+│   │   │   │   ├── dashboard/             # Dashboard
+│   │   │   │   │   ├── dashboard.controller.ts
+│   │   │   │   │   ├── dashboard.service.ts
+│   │   │   │   │   └── dashboard.module.ts
+│   │   │   │   │
+│   │   │   │   └── accounting/            # Future Module
+│   │   │   │       └── (structure similar to above)
+│   │   │   │
+│   │   │   ├── common/                    # Shared Infrastructure
+│   │   │   │   ├── base/
+│   │   │   │   │   ├── base.controller.ts
+│   │   │   │   │   ├── base.service.ts
+│   │   │   │   │   ├── base.repository.ts
+│   │   │   │   │   └── sql-state.controller.ts
+│   │   │   │   │
+│   │   │   │   ├── guards/
+│   │   │   │   │   ├── auth.guard.ts
+│   │   │   │   │   ├── subscription.guard.ts
+│   │   │   │   │   ├── permission.guard.ts
+│   │   │   │   │   ├── module.guard.ts
+│   │   │   │   │   └── branch.guard.ts
+│   │   │   │   │
+│   │   │   │   ├── decorators/
+│   │   │   │   │   ├── user.decorator.ts
+│   │   │   │   │   ├── permission.decorator.ts
+│   │   │   │   │   ├── branch.decorator.ts
+│   │   │   │   │   ├── company.decorator.ts
+│   │   │   │   │   └── public.decorator.ts
+│   │   │   │   │
+│   │   │   │   ├── interceptors/
+│   │   │   │   │   ├── branch-context.interceptor.ts
+│   │   │   │   │   ├── transform.interceptor.ts
+│   │   │   │   │   └── audit.interceptor.ts
+│   │   │   │   │
+│   │   │   │   ├── filters/
+│   │   │   │   │   ├── http-exception.filter.ts
+│   │   │   │   │   ├── subscription-expired.filter.ts
+│   │   │   │   │   └── all-exceptions.filter.ts
+│   │   │   │   │
+│   │   │   │   ├── pipes/
+│   │   │   │   │   ├── validation.pipe.ts
+│   │   │   │   │   └── sql-state.pipe.ts
+│   │   │   │   │
+│   │   │   │   ├── dto/
+│   │   │   │   │   ├── pagination.dto.ts
+│   │   │   │   │   ├── sql-state-base.dto.ts
+│   │   │   │   │   └── response.dto.ts
+│   │   │   │   │
+│   │   │   │   ├── enums/
+│   │   │   │   │   ├── module.enum.ts
+│   │   │   │   │   ├── form.enum.ts
+│   │   │   │   │   ├── action.enum.ts
+│   │   │   │   │   ├── status.enum.ts
+│   │   │   │   │   └── permission.enum.ts
+│   │   │   │   │
+│   │   │   │   ├── interfaces/
+│   │   │   │   │   ├── user-context.interface.ts
+│   │   │   │   │   ├── jwt-payload.interface.ts
+│   │   │   │   │   └── module-permission.interface.ts
+│   │   │   │   │
+│   │   │   │   └── utils/
+│   │   │   │       ├── hash.util.ts
+│   │   │   │       ├── date.util.ts
+│   │   │   │       └── query.util.ts
+│   │   │   │
+│   │   │   ├── config/
+│   │   │   │   ├── database.config.ts
+│   │   │   │   ├── jwt.config.ts
+│   │   │   │   ├── app.config.ts
+│   │   │   │   └── validation.config.ts
+│   │   │   │
+│   │   │   └── migrations/
+│   │   │       └── (TypeORM migrations)
+│   │   │
+│   │   ├── test/
+│   │   │   ├── app.e2e-spec.ts
+│   │   │   └── jest-e2e.json
+│   │   │
+│   │   ├── .env
+│   │   ├── .env.example
+│   │   ├── project.json
+│   │   └── tsconfig.app.json
+│   │
+│   ├── api-support/                       # InfoAidTech Admin (Future)
+│   │   └── src/
+│   │       ├── main.ts
+│   │       ├── app.module.ts
+│   │       └── (minimal structure for now)
+│   │
+│   └── worker/                            # Background Jobs (Future)
+│       └── src/
+│           ├── main.ts
+│           ├── app.module.ts
+│           └── (minimal structure for now)
+│
+├── libs/                                  # Shared Libraries
+│   ├── database/
+│   │   ├── src/
+│   │   │   ├── database.module.ts
+│   │   │   ├── database.config.ts
+│   │   │   ├── entities/
+│   │   │   │   └── index.ts              # Export all entities
+│   │   │   ├── repositories/
+│   │   │   │   └── base.repository.ts
+│   │   │   └── index.ts
+│   │   ├── project.json
+│   │   └── tsconfig.lib.json
+│   │
+│   ├── auth/
+│   │   ├── src/
+│   │   │   ├── auth.module.ts
+│   │   │   ├── strategies/
+│   │   │   │   ├── jwt.strategy.ts
+│   │   │   │   └── local.strategy.ts
+│   │   │   ├── guards/
+│   │   │   │   ├── jwt-auth.guard.ts
+│   │   │   │   └── permission.guard.ts
+│   │   │   ├── decorators/
+│   │   │   │   └── permission.decorator.ts
+│   │   │   ├── interfaces/
+│   │   │   │   └── jwt-payload.interface.ts
+│   │   │   └── index.ts
+│   │   ├── project.json
+│   │   └── tsconfig.lib.json
+│   │
+│   ├── subscription/
+│   │   ├── src/
+│   │   │   ├── subscription.module.ts
+│   │   │   ├── guards/
+│   │   │   │   └── subscription.guard.ts
+│   │   │   ├── services/
+│   │   │   │   ├── subscription.service.ts
+│   │   │   │   └── grace-period.service.ts
+│   │   │   ├── entities/
+│   │   │   │   ├── subscription.entity.ts
+│   │   │   │   └── subscription-log.entity.ts
+│   │   │   ├── enums/
+│   │   │   │   └── subscription-status.enum.ts
+│   │   │   └── index.ts
+│   │   ├── project.json
+│   │   └── tsconfig.lib.json
+│   │
+│   ├── audit/
+│   │   ├── src/
+│   │   │   ├── audit.module.ts
+│   │   │   ├── services/
+│   │   │   │   └── audit.service.ts
+│   │   │   ├── entities/
+│   │   │   │   ├── audit-log.entity.ts
+│   │   │   │   ├── action-log.entity.ts
+│   │   │   │   └── login-log.entity.ts
+│   │   │   ├── interceptors/
+│   │   │   │   └── audit.interceptor.ts
+│   │   │   └── index.ts
+│   │   ├── project.json
+│   │   └── tsconfig.lib.json
+│   │
+│   ├── notifications/
+│   │   ├── src/
+│   │   │   ├── notifications.module.ts
+│   │   │   ├── services/
+│   │   │   │   ├── sms.service.ts
+│   │   │   │   ├── email.service.ts
+│   │   │   │   └── notification.service.ts
+│   │   │   ├── templates/
+│   │   │   │   ├── sms/
+│   │   │   │   └── email/
+│   │   │   ├── interfaces/
+│   │   │   │   └── notification.interface.ts
+│   │   │   └── index.ts
+│   │   ├── project.json
+│   │   └── tsconfig.lib.json
+│   │
+│   └── core/
+│       ├── src/
+│       │   ├── constants/
+│       │   │   ├── modules.constant.ts
+│       │   │   ├── forms.constant.ts
+│       │   │   └── permissions.constant.ts
+│       │   ├── utils/
+│       │   │   ├── branch-context.util.ts
+│       │   │   ├── sql-state.util.ts
+│       │   │   └── date.util.ts
+│       │   ├── interfaces/
+│       │   │   ├── user-context.interface.ts
+│       │   │   └── module-permission.interface.ts
+│       │   └── index.ts
+│       ├── project.json
+│       └── tsconfig.lib.json
 ```
-
-To see all available targets to run for a project, run:
-
-```sh
-npx nx show project kormo-erp
-```
-
-These targets are either [inferred automatically](https://nx.dev/concepts/inferred-tasks?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) or defined in the `project.json` or `package.json` files.
-
-[More about running tasks in the docs &raquo;](https://nx.dev/features/run-tasks?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-
-## Add new projects
-
-While you could add new projects to your workspace manually, you might want to leverage [Nx plugins](https://nx.dev/concepts/nx-plugins?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) and their [code generation](https://nx.dev/features/generate-code?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) feature.
-
-Use the plugin's generator to create new projects.
-
-To generate a new application, use:
-
-```sh
-npx nx g @nx/nest:app demo
-```
-
-To generate a new library, use:
-
-```sh
-npx nx g @nx/node:lib mylib
-```
-
-You can use `npx nx list` to get a list of installed plugins. Then, run `npx nx list <plugin-name>` to learn about more specific capabilities of a particular plugin. Alternatively, [install Nx Console](https://nx.dev/getting-started/editor-setup?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) to browse plugins and generators in your IDE.
-
-[Learn more about Nx plugins &raquo;](https://nx.dev/concepts/nx-plugins?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) | [Browse the plugin registry &raquo;](https://nx.dev/plugin-registry?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-
-## Set up CI!
-
-### Step 1
-
-To connect to Nx Cloud, run the following command:
-
-```sh
-npx nx connect
-```
-
-Connecting to Nx Cloud ensures a [fast and scalable CI](https://nx.dev/ci/intro/why-nx-cloud?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) pipeline. It includes features such as:
-
-- [Remote caching](https://nx.dev/ci/features/remote-cache?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-- [Task distribution across multiple machines](https://nx.dev/ci/features/distribute-task-execution?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-- [Automated e2e test splitting](https://nx.dev/ci/features/split-e2e-tasks?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-- [Task flakiness detection and rerunning](https://nx.dev/ci/features/flaky-tasks?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-
-### Step 2
-
-Use the following command to configure a CI workflow for your workspace:
-
-```sh
-npx nx g ci-workflow
-```
-
-[Learn more about Nx on CI](https://nx.dev/ci/intro/ci-with-nx#ready-get-started-with-your-provider?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-
-## Install Nx Console
-
-Nx Console is an editor extension that enriches your developer experience. It lets you run tasks, generate code, and improves code autocompletion in your IDE. It is available for VSCode and IntelliJ.
-
-[Install Nx Console &raquo;](https://nx.dev/getting-started/editor-setup?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-
-## Useful links
-
-Learn more:
-
-- [Learn more about this workspace setup](https://nx.dev/nx-api/nest?utm_source=nx_project&amp;utm_medium=readme&amp;utm_campaign=nx_projects)
-- [Learn about Nx on CI](https://nx.dev/ci/intro/ci-with-nx?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-- [Releasing Packages with Nx release](https://nx.dev/features/manage-releases?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-- [What are Nx plugins?](https://nx.dev/concepts/nx-plugins?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-
-And join the Nx community:
-- [Discord](https://go.nx.dev/community)
-- [Follow us on X](https://twitter.com/nxdevtools) or [LinkedIn](https://www.linkedin.com/company/nrwl)
-- [Our Youtube channel](https://www.youtube.com/@nxdevtools)
-- [Our blog](https://nx.dev/blog?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)

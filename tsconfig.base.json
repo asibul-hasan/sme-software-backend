@@ -14,7 +14,15 @@
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
-    "paths": {}
+    "paths": {
+      "@kormo-erp/database": ["libs/database/src/index.ts"],
+      "@kormo-erp/auth": ["libs/auth/src/index.ts"],
+      "@kormo-erp/billing": ["libs/billing/src/index.ts"],
+      "@kormo-erp/notifications": ["libs/notifications/src/index.ts"],
+      "@kormo-erp/audit": ["libs/audit/src/index.ts"],
+      "@kormo-erp/core": ["libs/core/src/index.ts"],
+      "@kormo-erp/subscription": ["libs/subscription/src/index.ts"]
+    }
   },
   "exclude": ["node_modules", "tmp"]
 }
