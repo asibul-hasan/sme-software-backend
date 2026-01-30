@@ -64,7 +64,7 @@
     "seed": {
       "executor": "nx:run-commands",
       "options": {
-        "command": "ts-node -r tsconfig-paths/register apps/api-main/src/seed.ts"
+        "command": "npx ts-node -r tsconfig-paths/register -O \"{\\\"module\\\":\\\"commonjs\\\"}\" --project apps/api-main/tsconfig.json apps/api-main/src/seed.ts"
       }
     }
   },

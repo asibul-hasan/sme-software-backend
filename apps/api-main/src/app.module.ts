@@ -30,10 +30,6 @@ import { SeedModule } from './seed/seed.module';
         },
         {
             provide: APP_GUARD,
-            useClass: SubscriptionGuard,
-        },
-        {
-            provide: APP_GUARD,
             useClass: ModuleGuard,
         },
         {
