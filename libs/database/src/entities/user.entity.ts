@@ -7,8 +7,8 @@ import {
     ManyToOne,
     JoinColumn,
 } from 'typeorm';
-import { Company } from './company.entity';
-import { Designation } from './designation.entity';
+import type { Company } from './company.entity';
+import type { Designation } from './designation.entity';
 
 @Entity('users')
 export class User {
@@ -52,11 +52,11 @@ export class User {
     deleted_at!: Date;
 
     // Relations
-    @ManyToOne(() => Company)
+    @ManyToOne('Company')
     @JoinColumn({ name: 'company_id' })
-    company!: Company;
+    company!: any;
 
-    @ManyToOne(() => Designation)
+    @ManyToOne('Designation')
     @JoinColumn({ name: 'designation_id' })
-    designation!: Designation;
+    designation!: any;
 }

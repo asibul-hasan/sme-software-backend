@@ -1,20 +1,29 @@
 export enum FormEnum {
-    // HR Forms
-    EMPLOYEE_LIST = 'EMPLOYEE_LIST',
-    EMPLOYEE_CREATE = 'EMPLOYEE_CREATE',
-    EMPLOYEE_EDIT = 'EMPLOYEE_EDIT',
+    // HR Forms (HR_1xxx)
+    HR_EMPLOYEE = 'HR_1001',
+    HR_ATTENDANCE = 'HR_1002',
+    HR_PAYROLL = 'HR_1003',
+    HR_LEAVE = 'HR_1004',
 
-    // Inventory Forms
-    PRODUCT_LIST = 'PRODUCT_LIST',
-    PRODUCT_CREATE = 'PRODUCT_CREATE',
-    PRODUCT_EDIT = 'PRODUCT_EDIT',
-    STOCK_ADJUST = 'STOCK_ADJUST',
+    // Inventory Forms (IN_1xxx)
+    IN_PRODUCT = 'IN_1001',
+    IN_CATEGORY = 'IN_1002',
+    IN_STOCK = 'IN_1003',
+    IN_WAREHOUSE = 'IN_1004',
 
-    // Sales Forms
-    POS_SALE = 'POS_SALE',
-    SALE_RETURN = 'SALE_RETURN',
+    // Sales Forms (SL_1xxx)
+    SL_CUSTOMER = 'SL_1001',
+    SL_INVOICE = 'SL_1002',
+    SL_PAYMENT = 'SL_1003',
+    SL_RETURN = 'SL_1004',
 
-    // Settings Forms
-    DESIGNATION_MANAGE = 'DESIGNATION_MANAGE',
-    PERMISSION_MANAGE = 'PERMISSION_MANAGE',
+    // Settings Forms (ST_1xxx)
+    ST_USER = 'ST_1001',
+    ST_ROLE = 'ST_1002', // Designation
+    ST_PERMISSION = 'ST_1003', // User Access Form as requested
+    ST_COMPANY = 'ST_1004',
+
+    // Reports (RP_1xxx)
+    RP_SALES = 'RP_1001',
+    RP_INVENTORY = 'RP_1002',
 }

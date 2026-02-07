@@ -6,8 +6,8 @@ import {
     ManyToOne,
     JoinColumn,
 } from 'typeorm';
-import { User } from './user.entity';
-import { Branch } from './branch.entity';
+import type { User } from './user.entity';
+import type { Branch } from './branch.entity';
 
 @Entity('user_branches')
 export class UserBranch {
@@ -27,11 +27,11 @@ export class UserBranch {
     created_at!: Date;
 
     // Relations
-    @ManyToOne(() => User)
+    @ManyToOne('User')
     @JoinColumn({ name: 'user_id' })
-    user!: User;
+    user!: any;
 
-    @ManyToOne(() => Branch)
+    @ManyToOne('Branch')
     @JoinColumn({ name: 'branch_id' })
-    branch!: Branch;
+    branch!: any;
 }
