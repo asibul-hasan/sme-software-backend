@@ -1,57 +1,87 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { Designation } from '@kormo-erp/database';
+import {
+    Designation,
+    DesignationModulePermission,
+    DesignationFormPermission,
+    Form
+} from '@kormo-erp/database';
 import {
     IPermissionConfig,
     IModulePermission,
+    IFormPermission,
     ModuleEnum,
     FormEnum,
     ActionEnum
 } from '@kormo-erp/core';
-import { DESIGNATION_PERMISSION_MAP } from '../../config/permissions.config';
 
-/**
- * Permission Service
- * 
- * THIS IS THE ABSTRACTION LAYER - The only place that knows about hardcoded vs DB permissions
- * 
- * TODAY: Reads from DESIGNATION_PERMISSION_MAP (hardcoded)
- * FUTURE: Reads from database via API
- * 
- * ALL OTHER CODE stays the same when switching
- */
 @Injectable()
 export class PermissionService {
     constructor(
         @InjectRepository(Designation)
         private designationRepo: Repository<Designation>,
+        @InjectRepository(DesignationModulePermission)
+        private designationModuleRepo: Repository<DesignationModulePermission>,
+        @InjectRepository(DesignationFormPermission)
+        private designationFormRepo: Repository<DesignationFormPermission>,
     ) { }
 
     /**
      * Get permissions for a user
-     * 
-     * @param designationId - User's designation ID
-     * @param companyId - User's company ID
-     * @returns Permission configuration
      */
     async getPermissions(designationId: number, companyId: number): Promise<IPermissionConfig> {
-        // Get designation
-        const designation = await this.designationRepo.findOne({
-            where: { id: designationId, company_id: companyId },
+        // 1. Fetch Module Permissions
+        const modulePermissions = await this.designationModuleRepo.find({
+            where: { designation_id: designationId, has_access: true },
         });
 
-        if (!designation) {
-            return { modules: [] };
+        // 2. Fetch Form Permissions (with joined Form entity to get module/code)
+        const formPermissions = await this.designationFormRepo.find({
+            where: { designation_id: designationId },
+            relations: ['form'],
+        });
+
+        // 3. Construct IPermissionConfig
+        const modulesMap = new Map<string, IModulePermission>();
+
+        // Initialize modules from module permissions
+        for (const mp of modulePermissions) {
+            modulesMap.set(mp.module_code, {
+                module: mp.module_code,
+                enabled: true,
+                forms: {},
+            });
         }
 
-        // TODAY: Return hardcoded permissions
-        const permissions = DESIGNATION_PERMISSION_MAP[designation.name] || { modules: [] };
+        // Fill in form permissions
+        for (const fp of formPermissions) {
+            const moduleCode = fp.form.module; // Assuming Form entity has 'module' column matching module_code
+            let moduleConfig = modulesMap.get(moduleCode);
 
-        // FUTURE: Replace above with database query
-        // const permissions = await this.fetchPermissionsFromDatabase(designationId, companyId);
+            // If module config missing but form permission exists, should we add module?
+            // User says "when module permission given then form permission".
+            // So logic implies module permission must exist.
+            // But if we want robust, we might add it. Let's assume strict: only if module enabled.
+            if (!moduleConfig) {
+                 // For safety, let's create it implicitly if form access exists?
+                 // No, respect module level switch.
+                 continue; // Skip if module disabled
+            }
 
-        return permissions;
+            const formCode = fp.form.code; // e.g., 'HR_1001'
+
+            moduleConfig.forms[formCode] = {
+                [ActionEnum.VIEW]: fp.can_view,
+                [ActionEnum.CREATE]: fp.can_create,
+                [ActionEnum.EDIT]: fp.can_edit,
+                [ActionEnum.DELETE]: fp.can_delete,
+            };
+        }
+
+        return {
+            modules: Array.from(modulesMap.values()),
+        };
     }
 
     /**
@@ -60,20 +90,20 @@ export class PermissionService {
     async hasPermission(
         designationId: number,
         companyId: number,
-        formCode: FormEnum,
+        formCode: string, // Changed from FormEnum to string to support dynamic codes
         action: ActionEnum,
     ): Promise<boolean> {
-        const permissions = await this.getPermissions(designationId, companyId);
-
-        for (const module of permissions.modules) {
+        // Optimized: Query DB directly instead of loading full config?
+        // For now, reuse getPermissions to keep consistent caching layer if added later.
+        const config = await this.getPermissions(designationId, companyId);
+        
+        for (const module of config.modules) {
             if (!module.enabled) continue;
-
-            const formPermissions = module.forms[formCode];
-            if (formPermissions && formPermissions[action] === true) {
+            const formPerm = module.forms[formCode];
+            if (formPerm && formPerm[action] === true) {
                 return true;
             }
         }
-
         return false;
     }
 
@@ -83,12 +113,12 @@ export class PermissionService {
     async hasModule(
         designationId: number,
         companyId: number,
-        moduleCode: ModuleEnum,
+        moduleCode: string,
     ): Promise<boolean> {
-        const permissions = await this.getPermissions(designationId, companyId);
-
-        const module = permissions.modules.find(m => m.module === moduleCode);
-        return module ? module.enabled : false;
+        const perm = await this.designationModuleRepo.findOne({
+            where: { designation_id: designationId, module_code: moduleCode, has_access: true },
+        });
+        return !!perm;
     }
 
     /**
@@ -98,22 +128,9 @@ export class PermissionService {
         designationId: number,
         companyId: number,
     ): Promise<string[]> {
-        const permissions = await this.getPermissions(designationId, companyId);
-        return permissions.modules
-            .filter(m => m.enabled)
-            .map(m => m.module);
+        const perms = await this.designationModuleRepo.find({
+            where: { designation_id: designationId, has_access: true },
+        });
+        return perms.map(p => p.module_code);
     }
-
-    /**
-     * FUTURE: Fetch permissions from database
-     * This method will replace the hardcoded config when Support Dashboard is ready
-     */
-    // private async fetchPermissionsFromDatabase(
-    //   designationId: number,
-    //   companyId: number,
-    // ): Promise<IPermissionConfig> {
-    //   // Query designation_permissions table
-    //   // Build IPermissionConfig from database
-    //   // Return structured permissions
-    // }
 }

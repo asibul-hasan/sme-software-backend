@@ -9,3 +9,7 @@ export * from './form.entity';
 export * from './company-module.entity';
 export * from './approval-rule.entity';
 export * from './approval-history.entity';
+export * from './designation-module-permission.entity';
+export * from './designation-form-permission.entity';
+export * from './user-log.entity';
+export * from './employee.entity';

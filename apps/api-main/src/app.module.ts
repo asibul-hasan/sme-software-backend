@@ -7,8 +7,11 @@ import { SubscriptionModule, SubscriptionGuard } from '@kormo-erp/subscription';
 import { CommonModule } from './common/common.module';
 import { PermissionGuard } from './common/guards/permission.guard';
 import { ModuleGuard } from './common/guards/module.guard';
-import { AuthModule } from './modules/core/auth/auth.module'; // NEW
+import { AuthModule } from './modules/core/auth/auth.module';
+import { UserModule } from './modules/core/user/user.module';
 import { SeedModule } from './seed/seed.module';
+import { EmployeeModule } from './modules/hr/employee/employee.module';
+
 
 @Module({
     imports: [
@@ -21,7 +24,9 @@ import { SeedModule } from './seed/seed.module';
         SubscriptionModule,
         CommonModule,
         AuthModule,
+        UserModule,
         SeedModule,
+        EmployeeModule,
     ],
     providers: [
         {

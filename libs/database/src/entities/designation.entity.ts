@@ -4,12 +4,22 @@ import {
     Column,
     CreateDateColumn,
     UpdateDateColumn,
+    OneToMany,
 } from 'typeorm';
 
 @Entity('designations')
 export class Designation {
     @PrimaryGeneratedColumn()
     id!: number;
+
+    @OneToMany('DesignationPermission', (designationPermission: any) => designationPermission.designation)
+    permissions!: any[];
+
+    @OneToMany('DesignationModulePermission', (dmp: any) => dmp.designation)
+    modulePermissions!: any[];
+
+    @OneToMany('DesignationFormPermission', (dfp: any) => dfp.designation)
+    formPermissions!: any[];
 
     @Column()
     company_id!: number;
